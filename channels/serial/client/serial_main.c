@@ -540,7 +540,7 @@ static void serial_check_for_events(SERIAL_DEVICE* serial)
 	DEBUG_SVC("[out] pending size %d", list_size(serial->pending_irps));
 }
 
-void serial_get_timeouts(SERIAL_DEVICE* serial, IRP* irp, UINT32* timeout, UINT32* interval_timeout)
+static void serial_get_timeouts(SERIAL_DEVICE* serial, IRP* irp, UINT32* timeout, UINT32* interval_timeout)
 {
 	SERIAL_TTY* tty;
 	UINT32 Length;

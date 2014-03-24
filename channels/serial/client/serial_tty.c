@@ -465,14 +465,14 @@ void serial_tty_free(SERIAL_TTY* tty)
 
 	if (tty->fd >= 0)
 	{
-		if (tty->pold_termios)
-			tcsetattr(tty->fd, TCSANOW, tty->pold_termios);
+		if (tty->ptermios_initial)
+			tcsetattr(tty->fd, TCSANOW, tty->ptermios_initial);
 
 		close(tty->fd);
 	}
 
 	free(tty->ptermios);
-	free(tty->pold_termios);
+	free(tty->ptermios_initial);
 	free(tty);
 }
 
@@ -507,15 +507,15 @@ SERIAL_TTY* serial_tty_new(const char* path, UINT32 id)
 		return NULL ;
 	}
 
-	tty->pold_termios = (struct termios*) malloc(sizeof(struct termios));
-	ZeroMemory(tty->pold_termios, sizeof(struct termios));
+	tty->ptermios_initial = (struct termios*) malloc(sizeof(struct termios));
+	ZeroMemory(tty->ptermios_initial, sizeof(struct termios));
 
-	if (tty->pold_termios == NULL)
+	if (tty->ptermios_initial == NULL)
 	{
 		serial_tty_free(tty);
 		return NULL;
 	}
-	tcgetattr(tty->fd, tty->pold_termios);
+	tcgetattr(tty->fd, tty->ptermios_initial);
 
 	if (!tty_get_termios(tty))
 	{

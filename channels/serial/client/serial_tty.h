@@ -59,7 +59,7 @@ struct _SERIAL_TTY
 	BYTE word_length;
 	BYTE chars[6];
 	struct termios* ptermios;
-	struct termios* pold_termios;
+	struct termios* ptermios_initial;
 	int event_txempty;
 	int event_cts;
 	int event_dsr;
