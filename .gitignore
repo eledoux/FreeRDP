@@ -107,3 +107,5 @@ default.log
 *.txt.user
 
 *.autosave
+
+TAGS
