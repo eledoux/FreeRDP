@@ -3,6 +3,7 @@
  * Event Definitions
  *
  * Copyright 2013 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,6 +65,10 @@ DEFINE_EVENT_END(EmbedWindow)
 DEFINE_EVENT_BEGIN(ErrorInfo)
 	UINT32 code;
 DEFINE_EVENT_END(ErrorInfo)
+
+DEFINE_EVENT_BEGIN(StatusInfo)
+	UINT32 code;
+DEFINE_EVENT_END(StatusInfo)
 
 DEFINE_EVENT_BEGIN(Terminate)
 	int code;

@@ -3,6 +3,7 @@
  * RDP Settings
  *
  * Copyright 2009-2011 Jay Sorg
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -249,6 +250,8 @@ rdpSettings* freerdp_settings_new(DWORD flags)
 		settings->DisableMenuAnims = TRUE;
 		settings->DisableThemes = FALSE;
 		settings->ConnectionType = CONNECTION_TYPE_LAN;
+		settings->SupportErrorInfoPdu = TRUE;
+		settings->SupportStatusInfoPdu = TRUE;
 
 		settings->EncryptionMethods = ENCRYPTION_METHOD_NONE;
 		settings->EncryptionLevel = ENCRYPTION_LEVEL_NONE;

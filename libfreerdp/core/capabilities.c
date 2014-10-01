@@ -3,6 +3,7 @@
  * RDP Capability Sets
  *
  * Copyright 2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -3510,8 +3511,32 @@ BOOL rdp_recv_demand_active(rdpRdp* rdp, wStream* s)
 
 	if (pduType != PDU_TYPE_DEMAND_ACTIVE)
 	{
-		if (pduType != PDU_TYPE_SERVER_REDIRECTION)
-			DEBUG_WARN( "expected PDU_TYPE_DEMAND_ACTIVE %04x, got %04x\n", PDU_TYPE_DEMAND_ACTIVE, pduType);
+		/* a few other PDU types might be received */
+		switch (pduType)
+		{
+			case PDU_TYPE_SERVER_REDIRECTION:
+				break; 
+
+			case PDU_TYPE_DATA:
+			{
+				UINT16 length;
+				BYTE pduType2;
+				UINT32 shareId;
+				BYTE compressedType;
+				UINT16 compressedLength;
+			
+				if (rdp_read_share_data_header(s, &length, &pduType2, &shareId, &compressedType, &compressedLength))
+				{
+					if (pduType2 == DATA_PDU_TYPE_STATUS_INFO)
+						break;
+					else
+						DEBUG_WARN("expected DATA_PDU_TYPE_STATUS_INFO %04x, got %04x\n", DATA_PDU_TYPE_STATUS_INFO, pduType2);
+				}
+			}
+
+			default:
+				DEBUG_WARN( "expected PDU_TYPE_DEMAND_ACTIVE %04x, got %04x\n", PDU_TYPE_DEMAND_ACTIVE, pduType);
+		}
 
 		return FALSE;
 	}

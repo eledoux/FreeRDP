@@ -2,6 +2,7 @@
 # libfreerdp-core cmake build script
 #
 # Copyright 2012 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+# Copyright 2014 Hewlett-Packard Development Company, L.P.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -68,6 +69,8 @@ set(${MODULE_PREFIX}_SRCS
 	license.h
 	errinfo.c
 	errinfo.h
+	statuscode.c
+	statuscode.h
 	security.c
 	security.h
 	settings.c

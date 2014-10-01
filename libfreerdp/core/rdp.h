@@ -3,6 +3,7 @@
  * RDP Core
  *
  * Copyright 2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +35,7 @@
 #include "update.h"
 #include "license.h"
 #include "errinfo.h"
+#include "statuscode.h"
 #include "autodetect.h"
 #include "heartbeat.h"
 #include "multitransport.h"
@@ -162,6 +164,7 @@ struct rdp_rdp
 	BYTE fips_encrypt_key[24];
 	BYTE fips_decrypt_key[24];
 	UINT32 errorInfo;
+	UINT32 statusInfo;
 	UINT32 finalize_sc_pdus;
 	BOOL disconnect;
 	BOOL resendFocus;
@@ -220,5 +223,6 @@ void rdp_free(rdpRdp* rdp);
 BOOL rdp_decrypt(rdpRdp* rdp, wStream* s, int length, UINT16 securityFlags);
 
 BOOL rdp_set_error_info(rdpRdp* rdp, UINT32 errorInfo);
+BOOL rdp_status_info(rdpRdp* rdp, UINT32 errorInfo);
 
 #endif /* __RDP_H */

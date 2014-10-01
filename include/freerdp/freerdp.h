@@ -3,6 +3,7 @@
  * FreeRDP Interface
  *
  * Copyright 2009-2011 Jay Sorg
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +40,7 @@ typedef RDP_CLIENT_ENTRY_POINTS_V1 RDP_CLIENT_ENTRY_POINTS;
 #include <freerdp/api.h>
 #include <freerdp/types.h>
 #include <freerdp/error.h>
+#include <freerdp/status.h>
 #include <freerdp/event.h>
 #include <freerdp/metrics.h>
 #include <freerdp/settings.h>
@@ -244,6 +246,7 @@ FREERDP_API int freerdp_message_queue_process_message(freerdp* instance, DWORD i
 FREERDP_API int freerdp_message_queue_process_pending_messages(freerdp* instance, DWORD id);
 
 FREERDP_API UINT32 freerdp_error_info(freerdp* instance);
+FREERDP_API UINT32 freerdp_status_info(freerdp* instance);
 
 FREERDP_API void freerdp_get_version(int* major, int* minor, int* revision);
 

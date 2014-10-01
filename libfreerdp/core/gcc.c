@@ -3,6 +3,7 @@
  * T.124 Generic Conference Control (GCC)
  *
  * Copyright 2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -759,7 +760,7 @@ void gcc_write_client_core_data(wStream* s, rdpMcs* mcs)
 	BYTE connectionType;
 	UINT16 highColorDepth;
 	UINT16 supportedColorDepths;
-	UINT16 earlyCapabilityFlags;
+	UINT16 earlyCapabilityFlags = 0;
 	WCHAR* clientDigProductId = NULL;
 	int clientDigProductIdLength;
 	rdpSettings* settings = mcs->settings;
@@ -809,13 +810,18 @@ void gcc_write_client_core_data(wStream* s, rdpMcs* mcs)
 			RNS_UD_15BPP_SUPPORT;
 
 	connectionType = settings->ConnectionType;
-	earlyCapabilityFlags = RNS_UD_CS_SUPPORT_ERRINFO_PDU;
 
 	if (settings->RemoteFxCodec)
 		connectionType = CONNECTION_TYPE_LAN;
 
 	if (connectionType != 0)
 		earlyCapabilityFlags |= RNS_UD_CS_VALID_CONNECTION_TYPE;
+
+	if (settings->SupportErrorInfoPdu)
+		earlyCapabilityFlags |=  RNS_UD_CS_SUPPORT_ERRINFO_PDU;
+
+	if (settings->SupportStatusInfoPdu)
+		earlyCapabilityFlags |= RNS_UD_CS_SUPPORT_STATUSINFO_PDU;
 
 	if (settings->ColorDepth == 32)
 	{

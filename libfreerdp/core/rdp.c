@@ -3,6 +3,7 @@
  * RDP Core
  *
  * Copyright 2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -249,6 +250,22 @@ BOOL rdp_set_error_info(rdpRdp* rdp, UINT32 errorInfo)
 	{
 		rdp->context->LastError = FREERDP_ERROR_SUCCESS;
 	}
+
+	return TRUE;
+}
+
+BOOL rdp_status_info(rdpRdp* rdp, UINT32 statusInfo)
+{
+	StatusInfoEventArgs e;
+	rdpContext* context = rdp->instance->context;
+
+	rdp->statusInfo = statusInfo;
+
+	rdp_print_statuscode(rdp->statusInfo);
+
+	EventArgsInit(&e, "freerdp");
+	e.code = rdp->statusInfo;
+	PubSub_OnStatusInfo(context->pubSub, context, &e);
 
 	return TRUE;
 }
@@ -648,6 +665,8 @@ BOOL rdp_recv_server_status_info_pdu(rdpRdp* rdp, wStream* s)
 		return FALSE;
 
 	Stream_Read_UINT32(s, statusCode); /* statusCode (4 bytes) */
+
+	rdp_status_info(rdp, statusCode);
 
 	return TRUE;
 }

@@ -3,6 +3,7 @@
  * FreeRDP Core
  *
  * Copyright 2011 Marc-Andre Moreau <marcandre.moreau@gmail.com>
+ * Copyright 2014 Hewlett-Packard Development Company, L.P.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -377,6 +378,7 @@ static wEventType FreeRDP_Events[] =
 		DEFINE_EVENT_ENTRY(PanningChange)
 		DEFINE_EVENT_ENTRY(ScalingFactorChange)
 		DEFINE_EVENT_ENTRY(ErrorInfo)
+		DEFINE_EVENT_ENTRY(StatusInfo)
 		DEFINE_EVENT_ENTRY(Terminate)
 		DEFINE_EVENT_ENTRY(ConnectionResult)
 		DEFINE_EVENT_ENTRY(ChannelConnected)
@@ -473,6 +475,11 @@ void freerdp_context_free(freerdp* instance)
 UINT32 freerdp_error_info(freerdp* instance)
 {
 	return instance->context->rdp->errorInfo;
+}
+
+UINT32 freerdp_status_info(freerdp* instance)
+{
+	return instance->context->rdp->statusInfo;
 }
 
 UINT32 freerdp_get_last_error(rdpContext* context)
