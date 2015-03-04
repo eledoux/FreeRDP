@@ -424,7 +424,7 @@ BOOL CommWriteFile(HANDLE hDevice, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite
 		pTmaxTimeout->tv_sec = Tmax / 1000; /* s */
 		pTmaxTimeout->tv_usec = (Tmax % 1000) * 1000; /* us */
 	}
-	else if ((pComm->timeouts.WriteTotalTimeoutMultiplier == 0) && (pComm->timeouts.WriteTotalTimeoutConstant))
+	else if ((pComm->timeouts.WriteTotalTimeoutMultiplier == 0) && (pComm->timeouts.WriteTotalTimeoutConstant == 0))
 	{
 		pTmaxTimeout = NULL;
 	}
