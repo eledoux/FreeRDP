@@ -256,6 +256,7 @@ static void* thread_launcher(void* arg)
 			goto exit;
 		}
 
+                ListDictionary_Add(thread_list, pthread_self(), thread); /* also done by winpr_StartThread() */
 		rc = fkt(thread->lpParameter);
 	}
 
@@ -289,7 +290,7 @@ static void winpr_StartThread(WINPR_THREAD *thread)
 	reset_event(thread);
 
 	pthread_create(&thread->thread, &attr, thread_launcher, thread);
-	ListDictionary_Add(thread_list, &thread->thread, thread);
+	ListDictionary_Add(thread_list, &thread->thread, thread); /* also done by thread_launcher() */
 	pthread_attr_destroy(&attr);
 	dump_thread(thread);
 }
